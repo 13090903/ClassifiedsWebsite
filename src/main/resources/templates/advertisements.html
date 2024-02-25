@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <title>Объявления</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}"></header>
+
+<div class="container mt-5">
+  <h1>Объявления</h1>
+  <div th:each="el : ${ads}" class="alert alert-info mt-2">
+    <div class="d-flex flex-row gap-3">
+      <h3 th:text="${el.title}"></h3>
+      <a th:href="'/advertisements/' + ${el.id}" class="btn btn-success">Детальнее</a>
+    </div>
+    <br><a th:href="'/advertisements/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
+    <form th:action="'/advertisements/' + ${el.id} + '/remove'" method="post" style="display: inline-block;">
+      <button type="submit" class="btn btn-warning">Удалить</button>
+    </form><br>
+  </div>
+</div>
+</body>
+</html>
