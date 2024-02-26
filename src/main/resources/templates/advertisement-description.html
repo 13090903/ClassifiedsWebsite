@@ -12,6 +12,10 @@
   <div th:each="el : ${advertisement}" class="alert alert-info mt-2">
     <h1 th:text="${el.title}"></h1>
     <p th:text="${el.description}"></p>
+    <div th:each="pic : ${el.images}" style="display: inline-block;" class="my-2">
+      <img th:src="'/images/' + ${pic.id}" height="100px"/><br>
+    </div>
+    <p th:text="${el.author}"></p>
   </div>
 </div>
 </body>

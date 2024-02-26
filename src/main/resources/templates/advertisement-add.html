@@ -10,9 +10,13 @@
 
 <div class="container mt-5 mb-5">
   <h1>Публикация объявления</h1>
-  <form action="/advertisements/add" method="post">
+  <form action="/advertisements/add" method="post" enctype="multipart/form-data">
     <input type="text" name="title" placeholder="Введите заголовок" class="form-control"><br>
     <input type="text" name="description" placeholder="Введите описание" class="form-control"><br>
+    <input type="text" name="author" placeholder="Введите автора" class="form-control"><br>
+    <input type="file" name="file1" class="form-control"><br>
+    <input type="file" name="file2" class="form-control"><br>
+    <input type="file" name="file3" class="form-control"><br>
     <button type="submit" class="btn btn-success">Добавить</button>
   </form>
 </div>

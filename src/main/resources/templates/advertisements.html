@@ -14,6 +14,9 @@
     <div class="d-flex flex-row gap-3">
       <h3 th:text="${el.title}"></h3>
       <a th:href="'/advertisements/' + ${el.id}" class="btn btn-success">Детальнее</a>
+    </div><br>
+    <div th:if="${el.images.size()} != 0">
+      <img th:src="'/images/' + ${el.previewImageId}" height="100px"/><br>
     </div>
     <br><a th:href="'/advertisements/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
     <form th:action="'/advertisements/' + ${el.id} + '/remove'" method="post" style="display: inline-block;">
