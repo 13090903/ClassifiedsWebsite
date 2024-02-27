@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <title>Регистрация</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<form action="/registration" method="post">
+  <input type="text" name="name" placeholder="Имя пользователя" class="form-control"><br>
+  <input type="email" name="email" placeholder="Электронная почта" class="form-control"><br>
+  <input type="text" name="phone_number" placeholder="Номер телефона" class="form-control"><br>
+  <input type="password" name="password" placeholder="Пароль" class="form-control"><br>
+  <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+</form>
+
+</body>
+</html>

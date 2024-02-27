@@ -42,10 +42,9 @@ public class Advertisement {
         images.add(image);
     }
 
-    public void deleteImages() {
-        for (Image image : images) {
-            image.setAdvertisement(null);
-        }
-        images.clear();
-    }
+//    public void deleteImages() {
+//        for (Image image : images) {
+//            image.setAdvertisement(null);
+//        }
+//    }
 }

@@ -13,7 +13,6 @@ import ru.vsu.csf.classifiedsweb.models.Image;
 import ru.vsu.csf.classifiedsweb.repositories.ImageRepository;
 
 import java.io.ByteArrayInputStream;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
