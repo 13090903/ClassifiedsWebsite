@@ -25,11 +25,11 @@ public class Advertisement {
     private String title;
     @Column(name = "description", columnDefinition = "text")
     private String description;
-    @Column(name = "author")
-    private String author;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "advertisement")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private User user;
     private LocalDateTime createdAt;
 
     @PrePersist

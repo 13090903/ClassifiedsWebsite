@@ -11,6 +11,7 @@ import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,34 +24,40 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
 
     @GetMapping("/advertisements")
-    public String advertisements(Model model) {
+    public String advertisements(Principal principal, Model model) {
         Iterable<Advertisement> advertisements = advertisementService.findAll();
         model.addAttribute("ads", advertisements);
+        model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
         return "advertisements";
     }
 
     @GetMapping("/advertisements/{id}")
-    public String advertisementDescription(@PathVariable(value = "id") long advertisementID, Model model) {
+    public String advertisementDescription(@PathVariable(value = "id") long advertisementID, Principal principal, Model model) {
         model.addAttribute("advertisement", advertisementService.findById(advertisementID));
+        model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
+
         return "advertisement-description";
     }
 
     @GetMapping("/advertisements/add")
-    public String advertisementAdd(Model model) {
+    public String advertisementAdd(Principal principal, Model model) {
         model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
+
         return "advertisement-add";
     }
 
     @PostMapping("/advertisements/add")
     public String addAdvertisement(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
-                                   @RequestParam("file3") MultipartFile file3, Advertisement advertisement, Model model) throws IOException {
-        advertisementService.create(advertisement, file1, file2, file3);
+                                   @RequestParam("file3") MultipartFile file3, Advertisement advertisement, Principal principal, Model model) throws IOException {
+        advertisementService.create(principal, advertisement, file1, file2, file3);
         return "redirect:/advertisements";
     }
 
     @GetMapping("/advertisements/{id}/edit")
-    public String advertisementEdit(@PathVariable(value = "id") long advertisementID, Model model) {
+    public String advertisementEdit(@PathVariable(value = "id") long advertisementID, Principal principal, Model model) {
         model.addAttribute("advertisement", advertisementService.findById(advertisementID));
+        model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
         return "advertisement-edit";
     }
 
