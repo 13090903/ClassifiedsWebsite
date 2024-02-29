@@ -12,21 +12,17 @@ import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class AdvertisementController {
-
     @Autowired
     private AdvertisementService advertisementService;
 
     @GetMapping("/advertisements")
     public String advertisements(Principal principal, Model model) {
         Iterable<Advertisement> advertisements = advertisementService.findAll();
-        model.addAttribute("ads", advertisements);
+        model.addAttribute("advertisements", advertisements);
         model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
         return "advertisements";
     }

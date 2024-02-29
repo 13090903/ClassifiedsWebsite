@@ -17,7 +17,8 @@
     <div th:each="pic : ${el.images}" style="display: inline-block;" class="my-2">
       <img th:src="'/images/' + ${pic.id}" height="100px"/><br>
     </div>
-    <p th:text="'Автор: ' + ${el.user.name}"></p>
+    <p></p>
+    <b>Автор: </b><a th:href="'/user/' + ${el.user.id}" th:text="${el.user.name}" class="link-danger"></a>
   </div>
 </div>
 </body>

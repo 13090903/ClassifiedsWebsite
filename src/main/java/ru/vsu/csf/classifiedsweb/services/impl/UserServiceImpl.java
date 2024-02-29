@@ -10,6 +10,8 @@ import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.repositories.UserRepository;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -28,5 +30,25 @@ public class UserServiceImpl implements UserService {
         log.info("Saving new User with email: {}", userEmail);
         userRepository.save(user);
         return true;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void banUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (user.isActive()) {
+                user.setActive(false);
+                log.info("Ban user {}", user.getName());
+            } else {
+                user.setActive(true);
+                log.info("Unban user {}", user.getName());
+            }
+            userRepository.save(user);
+        }
     }
 }

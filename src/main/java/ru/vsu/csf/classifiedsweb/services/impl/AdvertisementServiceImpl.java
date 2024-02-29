@@ -2,7 +2,6 @@ package ru.vsu.csf.classifiedsweb.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
@@ -22,13 +21,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class AdvertisementServiceImpl implements AdvertisementService {
-    @Autowired
     private final AdvertisementRepository advertisementRepository;
 
-    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
     private final ImageRepository imageRepository;
 
     @Override

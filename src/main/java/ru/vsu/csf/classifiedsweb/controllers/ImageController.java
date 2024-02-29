@@ -23,7 +23,6 @@ public class ImageController {
     @GetMapping("/images/{id}")
     @ResponseBody
     private ResponseEntity<?> getImageById(@PathVariable Long id) {
-        log.info("Getting image. Id = {}", id);
         Image image = imageRepository.findById(id).orElse(null);
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalFileName())

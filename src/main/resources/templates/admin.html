@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--  <link rel="stylesheet" href="/css/bootstrap.min.css">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Администратор</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<header th:if="user.email==null" th:insert="~{blocks/header :: header}"></header>
+<header th:unless="user.email==null" th:insert="~{blocks/header-auth :: header}"></header>
+
+<div class="container mt-5">
+    <h1>Панель администратора</h1>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Имя</th>
+            <th scope="col">Email</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Активность</th>
+            <th scope="col">Роль</th>
+            <th scope="col">Бан</th>
+            <th scope="col">Подробнее</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${users}">
+            <td th:text="${el.name}"></td>
+            <td th:text="${el.email}"></td>
+            <td th:text="${el.phoneNumber}"></td>
+            <td th:if="${el.isActive()}" th:text="True"></td>
+            <td th:unless="${el.isActive()}" th:text="False"></td>
+            <td th:each="role : ${el.roles}" th:text="${role.getAuthority()}"></td>
+            <td>
+                <form th:action="'/admin/ban/user/' + ${el.id}" method="post">
+                    <input type="submit" value="Бан">
+                </form>
+            </td>
+            <td><a th:href="'/user/' + ${el.id}">Подробнее</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

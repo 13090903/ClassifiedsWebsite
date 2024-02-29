@@ -53,6 +53,10 @@ public class User implements UserDetails {
         createdAt = LocalDateTime.now();
     }
 
+    public boolean isAdmin() {
+        return roles.contains(Role.ROLE_ADMIN);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
