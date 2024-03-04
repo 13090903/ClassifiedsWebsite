@@ -7,8 +7,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<header th:if="user.email==null" th:insert="~{blocks/header :: header}"></header>
-<header th:unless="user.email==null" th:insert="~{blocks/header-auth :: header}"></header>
+<header th:if="${user.email}==null" th:insert="~{blocks/header :: header}"></header>
+<header th:unless="${user.email}==null" th:insert="~{blocks/header-auth :: header}"></header>
 
 <div class="container mt-5 mb-5">
   <h1>Публикация объявления</h1>

@@ -7,8 +7,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<header th:if="user.email==null" th:insert="~{blocks/header :: header}"></header>
-<header th:unless="user.email==null" th:insert="~{blocks/header-auth :: header}"></header>
+<header th:if="${user.email}==null" th:insert="~{blocks/header :: header}"></header>
+<header th:unless="${user.email}==null" th:insert="~{blocks/header-auth :: header}"></header>
 
 <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold text-body-emphasis">Объявления</h1>
