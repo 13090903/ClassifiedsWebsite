@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -19,7 +21,9 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String admin(Principal principal, Model model) {
+        User user = userService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
         model.addAttribute("users", userService.findAll());
         return "admin";
     }

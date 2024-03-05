@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -37,9 +39,18 @@ public class UserController {
     }
 
     @GetMapping("/user/{user}")
-    public String userInfo(@PathVariable("user") User user, Model model) {
+    public String userInfo(@PathVariable("user") User user,Principal principal, Model model) {
+        User userCurr = userService.getUserByPrincipal(principal);
+        model.addAttribute("userC", userCurr);
         model.addAttribute("user", user);
         model.addAttribute("advertisements", user.getAdvertisements());
         return "user-information";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Principal principal, Model model) {
+        User user = userService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+        return "profile";
     }
 }

@@ -7,12 +7,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<header th:if="user.email==null" th:insert="~{blocks/header :: header}"></header>
-<header th:unless="user.email==null" th:insert="~{blocks/header-auth :: header}"></header>
+<header th:if="userC.email==null" th:insert="~{blocks/header :: header}"></header>
+<header th:unless="userC.email==null" th:insert="~{blocks/header-auth :: header}"></header>
 
 <div class="container mt-5">
-  <h1 th:text="'Объявления пользователя '+${user.name}"></h1>
-  <div th:each="el : ${advertisements}" class="alert alert-info mt-2">
+  <div th:if="${userC.isAdmin}">
+    <b>Имя: </b><p th:text="${user.name}"></p>
+    <b>Адрес электронной почты: </b><p th:text="${user.email}"></p>
+    <b>Телефон: </b><p th:text="${user.phoneNumber}"></p>
+  </div>
+  <h1 th:if="${userC.email}!=${user.email}" th:text="'Объявления пользователя '+${user.name}"></h1>
+  <h1 th:unless="${userC.email}!=${user.email}">Мои объявления</h1>
+  <div th:each="el : ${advertisements}" class="border border-dark border-2 mt-2 px-2 py-2 rounded">
     <div class="d-flex flex-row gap-3">
       <h3 th:text="${el.title}"></h3>
       <a th:href="'/advertisements/' + ${el.id}" class="btn btn-success">Детальнее</a>

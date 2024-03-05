@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
+import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
 
 import java.io.IOException;

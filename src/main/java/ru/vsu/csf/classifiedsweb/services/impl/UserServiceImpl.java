@@ -10,6 +10,7 @@ import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.repositories.UserRepository;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -50,5 +51,11 @@ public class UserServiceImpl implements UserService {
             }
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public User getUserByPrincipal(Principal principal) {
+        if (principal == null) return new User();
+        return userRepository.findByEmail(principal.getName());
     }
 }
