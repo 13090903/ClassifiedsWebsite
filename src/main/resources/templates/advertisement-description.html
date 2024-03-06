@@ -19,6 +19,9 @@
     </div>
     <p></p>
     <b>Автор: </b><a th:href="'/user/' + ${el.user.id}" th:text="${el.user.name}" class="link-danger"></a>
+    <form th:action="'/react/' + ${el.id}" method="post" style="display: inline-block;">
+      <button type="submit" class="btn btn-warning">React</button>
+    </form><br>
   </div>
 </div>
 </body>

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.vsu.csf.classifiedsweb.enums.Role;
@@ -46,12 +47,11 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Advertisement> advertisements = new ArrayList<>();
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    private void init() {
-        createdAt = LocalDateTime.now();
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Reaction> reactions = new ArrayList<>();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);

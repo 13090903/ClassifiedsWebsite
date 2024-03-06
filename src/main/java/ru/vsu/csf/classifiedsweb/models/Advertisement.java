@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,12 +31,11 @@ public class Advertisement {
     private Long previewImageId;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private User user;
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    private void init() {
-        createdAt = LocalDateTime.now();
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "advertisement")
+    private List<Reaction> reactions = new ArrayList<>();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     public void addImageToAdvertisement(Image image) {
         image.setAdvertisement(this);
