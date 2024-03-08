@@ -85,7 +85,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Advertisement prevAdvertisement = advertisementRepository.findById(advertisementId).orElseThrow(AdvertisementNotFoundException::new);
         prevAdvertisement.setTitle(advertisement.getTitle());
         prevAdvertisement.setDescription(advertisement.getDescription());
-        prevAdvertisement.setUser(advertisement.getUser());
 //        prevAdvertisement.deleteImages();
 //        for (Image image : prevAdvertisement.getImages()) {
 //            imageRepository.deleteById(image.getId());

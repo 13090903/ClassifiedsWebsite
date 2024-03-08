@@ -10,20 +10,32 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
+import ru.vsu.csf.classifiedsweb.services.ReactionService;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class AdvertisementController {
     @Autowired
     private AdvertisementService advertisementService;
+    @Autowired
+    private ReactionService reactionService;
 
     @GetMapping("/advertisements")
     public String advertisements(Principal principal, Model model) {
         Iterable<Advertisement> advertisements = advertisementService.findAll();
+        Set<Long> responses = new HashSet<>();
+        List<Advertisement> advertisementList = reactionService.findAdvertisementsByUserId(advertisementService.getUserByPrincipal(principal).getId());
+        for (Advertisement ad : advertisementList) {
+            responses.add(ad.getId());
+        }
         model.addAttribute("advertisements", advertisements);
+        model.addAttribute("responses", responses);
         model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
         return "advertisements";
     }

@@ -7,10 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
-import ru.vsu.csf.classifiedsweb.models.User;
-import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
+import ru.vsu.csf.classifiedsweb.models.Reaction;
 import ru.vsu.csf.classifiedsweb.services.ReactionService;
-import ru.vsu.csf.classifiedsweb.services.UserService;
 
 import java.security.Principal;
 
@@ -22,9 +20,15 @@ public class ReactionController {
     private ReactionService reactionService;
 
     @PostMapping("/react/{advertisement}")
-    public String createUser(Principal principal, @PathVariable("advertisement") Advertisement advertisement) {
-        log.info("User {} reacted to advertisement {}", principal.getName(), advertisement.getTitle());
-        reactionService.create(principal, advertisement);
-        return "redirect:/advertisements/{advertisement}";
+    public String createReaction(Principal principal, @PathVariable("advertisement") Advertisement advertisement) {
+        Reaction reaction = reactionService.findByUserAdvertisement(reactionService.getUserByPrincipal(principal), advertisement);
+        if (reaction == null) {
+            log.info("User {} reacted to advertisement {}", principal.getName(), advertisement.getTitle());
+            reactionService.create(principal, advertisement);
+        } else {
+            log.info("User {} remove reaction to advertisement {}", principal.getName(), advertisement.getTitle());
+            reactionService.deleteById(reaction.getId());
+        }
+        return "redirect:/advertisements";
     }
 }

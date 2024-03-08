@@ -32,7 +32,7 @@ public class Advertisement {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "advertisement")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "advertisement")
     private List<Reaction> reactions = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;
