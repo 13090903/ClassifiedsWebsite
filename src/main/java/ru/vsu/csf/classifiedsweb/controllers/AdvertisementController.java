@@ -48,6 +48,24 @@ public class AdvertisementController {
         return "advertisement-description";
     }
 
+    @GetMapping("/advertisements/{id}/complete")
+    public String advertisementCompletionPage(@PathVariable(value = "id") long advertisementID, Principal principal, Model model) {
+        model.addAttribute("advertisement", advertisementService.findById(advertisementID));
+        model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
+
+        return "advertisement-complete";
+    }
+
+    @PostMapping("/advertisements/{id}/complete")
+    public String advertisementCompletion(@PathVariable(value = "id") long advertisementID, Principal principal) {
+        User user = advertisementService.getUserByPrincipal(principal);
+        //TODO: maybe better do it in service
+        if (user.equals(advertisementService.findById(advertisementID).getUser())) {
+            advertisementService.complete(advertisementID);
+        }
+        return "redirect:/advertisements";
+    }
+
     @GetMapping("/advertisements/add")
     public String advertisementAdd(Principal principal, Model model) {
         model.addAttribute("advertisements", advertisementService.findAll());

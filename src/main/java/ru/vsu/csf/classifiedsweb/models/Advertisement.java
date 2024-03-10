@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import ru.vsu.csf.classifiedsweb.enums.AdvertisementState;
+import ru.vsu.csf.classifiedsweb.enums.Role;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +33,10 @@ public class Advertisement {
     private Long previewImageId;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private User user;
+
+    @Column(name = "state")
+    @Enumerated(EnumType.STRING)
+    private AdvertisementState state;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "advertisement")
     private List<Reaction> reactions = new ArrayList<>();

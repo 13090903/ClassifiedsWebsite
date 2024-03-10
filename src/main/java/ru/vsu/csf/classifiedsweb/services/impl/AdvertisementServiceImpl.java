@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.vsu.csf.classifiedsweb.enums.AdvertisementState;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.Image;
 import ru.vsu.csf.classifiedsweb.models.User;
@@ -35,12 +36,13 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Iterable<Advertisement> findAll() {
-        return advertisementRepository.findAll();
+        return advertisementRepository.findAllByOrderByStateAsc();
     }
 
     @Override
     public void create(Principal principal, Advertisement advertisement, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         advertisement.setUser(getUserByPrincipal(principal));
+        advertisement.setState(AdvertisementState.ACTIVE);
         Image image1;
         Image image2;
         Image image3;
@@ -116,5 +118,13 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(AdvertisementNotFoundException::new);
         log.info("Deleting {}", advertisement);
         advertisementRepository.delete(advertisement);
+    }
+
+    @Override
+    public void complete(Long id) {
+        Advertisement advertisement = advertisementRepository.findById(id).orElseThrow(AdvertisementNotFoundException::new);
+        advertisement.setState(AdvertisementState.COMPLETED);
+        log.info("advertisement {} completed", advertisement);
+        advertisementRepository.save(advertisement);
     }
 }

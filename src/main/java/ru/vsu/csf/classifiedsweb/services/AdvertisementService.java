@@ -18,5 +18,7 @@ public interface AdvertisementService {
 
     void deleteById(Long id);
 
+    void complete(Long id);
+
     User getUserByPrincipal(Principal principal);
 }

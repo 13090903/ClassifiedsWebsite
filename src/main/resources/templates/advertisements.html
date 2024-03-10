@@ -26,6 +26,7 @@
         <button type="submit" class="btn btn-warning">Удалить</button>
       </form>
       <br>
+      <a th:href="'/advertisements/' + ${el.id} + '/complete'" class="btn btn-warning my-2">Завершить</a>
     </div>
     <div th:if="${user.email}!=null">
       <div th:unless="${#sets.contains(responses, el.id)}">
