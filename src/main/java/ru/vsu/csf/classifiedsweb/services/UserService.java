@@ -13,6 +13,7 @@ public interface UserService {
     List<User> findAllSortedByRating();
 
     void banUser(Long id);
+    void changeRole(Long id);
 
     User getUserByPrincipal(Principal principal);
 

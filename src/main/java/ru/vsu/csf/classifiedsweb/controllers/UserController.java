@@ -60,7 +60,13 @@ public class UserController {
     @GetMapping("/users/rating")
     public String usersRating(Principal principal, Model model) {
         List<UserPlace> usersPlaces = new ArrayList<>();
-        List<User> users = userService.findAllSortedByRating();
+        List<User> users1 = userService.findAllSortedByRating();
+        List<User> users = new ArrayList<>();
+        for (User u : users1) {
+            if (u.isActive()) {
+                users.add(u);
+            }
+        }
         User user = userService.getUserByPrincipal(principal);
         for (int number = 0; number < users.size(); number++) {
             usersPlaces.add(new UserPlace(users.get(number), (long) (number+1)));

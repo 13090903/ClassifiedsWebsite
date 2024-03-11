@@ -12,6 +12,7 @@ import ru.vsu.csf.classifiedsweb.services.UserService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -50,6 +51,23 @@ public class UserServiceImpl implements UserService {
                 user.setActive(true);
                 log.info("Unban user {}", user.getName());
             }
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void changeRole(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            Set<Role> roleSet = user.getRoles();
+            if (roleSet.contains(Role.ROLE_USER)) {
+                roleSet.remove(Role.ROLE_USER);
+                roleSet.add(Role.ROLE_ADMIN);
+            } else if (roleSet.contains(Role.ROLE_ADMIN)){
+                roleSet.remove(Role.ROLE_ADMIN);
+                roleSet.add(Role.ROLE_USER);
+            }
+            user.setRoles(roleSet);
             userRepository.save(user);
         }
     }
