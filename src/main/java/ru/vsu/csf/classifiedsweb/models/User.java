@@ -32,8 +32,6 @@ public class User implements UserDetails {
     private String phoneNumber;
     @Column(name = "city")
     private String city;
-    @Column(name = "link")
-    private String link;
     @Column(name = "active")
     boolean active;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -52,6 +50,9 @@ public class User implements UserDetails {
     private List<Reaction> reactions = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column(name = "rating")
+    private Long rating;
 
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);

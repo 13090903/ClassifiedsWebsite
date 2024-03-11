@@ -15,6 +15,7 @@
     <b>Имя: </b><p th:text="${user.name}"></p>
     <b>Адрес электронной почты: </b><p th:text="${user.email}"></p>
     <b>Телефон: </b><p th:text="${user.phoneNumber}"></p>
+    <b>Город: </b><p th:text="${user.city}"></p>
   </div>
   <h1 th:if="${userC.email}!=${user.email}" th:text="'Объявления пользователя '+${user.name}"></h1>
   <h1 th:unless="${userC.email}!=${user.email}">Мои объявления</h1>

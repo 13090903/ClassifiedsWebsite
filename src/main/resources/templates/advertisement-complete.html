@@ -16,6 +16,12 @@
         <p th:text="${el.user.name}"></p>
     </div>
     <form th:action="'/advertisements/' + ${advertisement.id} + '/complete'" method="post" style="display: inline-block;">
+        <input class="form-check-input mx-2" type="checkbox" name="reactedUsers"
+               th:each="el : ${advertisement.reactions}"
+               th:value="${el.user.id}"
+               th:text="${el.user.name}"
+        />
+        <br>
         <button type="submit" class="btn btn-warning">Завершить</button>
     </form>
 </div>

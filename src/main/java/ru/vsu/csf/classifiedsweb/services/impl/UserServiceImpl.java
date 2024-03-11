@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(userEmail) != null) return false;
         user.setActive(true);
         user.getRoles().add(Role.ROLE_USER);
+        user.setRating(0L);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         log.info("Saving new User with email: {}", userEmail);
         userRepository.save(user);
@@ -57,5 +58,18 @@ public class UserServiceImpl implements UserService {
     public User getUserByPrincipal(Principal principal) {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
+    }
+
+    @Override
+    public void addRatingById(Long id, Long value) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setRating(user.getRating() + value);
+            userRepository.save(user);
+        }
+    }
+
+    public List<User> findAllSortedByRating() {
+        return userRepository.findAllByOrderByRatingDesc();
     }
 }

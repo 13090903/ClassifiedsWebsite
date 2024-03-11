@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.UserService;
+import ru.vsu.csf.classifiedsweb.util.pairs.UserPlace;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,5 +55,18 @@ public class UserController {
         User user = userService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("/users/rating")
+    public String usersRating(Principal principal, Model model) {
+        List<UserPlace> usersPlaces = new ArrayList<>();
+        List<User> users = userService.findAllSortedByRating();
+        User user = userService.getUserByPrincipal(principal);
+        for (int number = 0; number < users.size(); number++) {
+            usersPlaces.add(new UserPlace(users.get(number), (long) (number+1)));
+        }
+        model.addAttribute("usersPlaces", usersPlaces);
+        model.addAttribute("user", user);
+        return "user-rating";
     }
 }

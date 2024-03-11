@@ -11,6 +11,7 @@ import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
 import ru.vsu.csf.classifiedsweb.services.ReactionService;
+import ru.vsu.csf.classifiedsweb.services.UserService;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -25,6 +26,8 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
     @Autowired
     private ReactionService reactionService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/advertisements")
     public String advertisements(Principal principal, Model model) {
@@ -57,11 +60,14 @@ public class AdvertisementController {
     }
 
     @PostMapping("/advertisements/{id}/complete")
-    public String advertisementCompletion(@PathVariable(value = "id") long advertisementID, Principal principal) {
+    public String advertisementCompletion(@PathVariable(value = "id") long advertisementID, @RequestParam(value = "reactedUsers")Long[] users, Principal principal) {
         User user = advertisementService.getUserByPrincipal(principal);
         //TODO: maybe better do it in service
         if (user.equals(advertisementService.findById(advertisementID).getUser())) {
             advertisementService.complete(advertisementID);
+            for (Long uId : users) {
+                userService.addRatingById(uId, 1L);
+            }
         }
         return "redirect:/advertisements";
     }

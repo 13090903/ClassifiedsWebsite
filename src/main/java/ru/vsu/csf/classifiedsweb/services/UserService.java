@@ -10,7 +10,11 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findAllSortedByRating();
+
     void banUser(Long id);
 
     User getUserByPrincipal(Principal principal);
+
+    void addRatingById(Long id, Long value);
 }

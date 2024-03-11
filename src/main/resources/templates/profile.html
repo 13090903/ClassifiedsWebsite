@@ -21,6 +21,8 @@
     <br>
     Номер телефона: <b th:text="${user.phoneNumber}"></b>
     <br>
+    Город: <b th:text="${user.city}"></b>
+    <br>
     <br>
     <a th:if="${user.isAdmin()}" href="/admin" class="btn btn-dark mb-3" style="text-align: center; width: 100%">
       Панель администратора <br>
