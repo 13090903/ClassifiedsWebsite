@@ -27,17 +27,20 @@
     <div th:if="${el.images.size()} != 0" class="my-2">
       <img th:src="'/images/' + ${el.previewImageId}" height="100px"/><br>
     </div>
-    <div th:if="${userC}==${el.user}" class="my-2">
+    <div th:if="${userC}==${el.user} and ${el.state != T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}" class="my-2">
       <br><a th:href="'/advertisements/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
       <form th:action="'/advertisements/' + ${el.id} + '/remove'" method="post" style="display: inline-block;">
         <button type="submit" class="btn btn-warning">Удалить</button>
       </form>
       <br>
     </div>
-    <div th:if="${user.email}!=null">
+    <div th:if="${user.email}!=null and ${el.state != T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}">
       <form th:action="'/react/' + ${el.id}" method="post" style="display: inline-block;">
         <button type="submit" class="btn btn-warning">Откликнуться</button>
       </form>
+    </div>
+    <div th:if="${el.state == T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}">
+      <h2>Завершено</h2>
     </div>
   </div>
 </div>
