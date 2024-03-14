@@ -5,11 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.vsu.csf.classifiedsweb.enums.Role;
+import ru.vsu.csf.classifiedsweb.models.Image;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.repositories.UserRepository;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
@@ -73,6 +76,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(Long id, User user,  MultipartFile file1) throws IOException {
+        User oldUser = userRepository.findById(id).orElse(null);
+        if (oldUser != null) {
+            oldUser.setName(user.getName());
+            oldUser.setPhoneNumber(user.getPhoneNumber());
+            oldUser.setCity(user.getCity());
+            addAvatar(oldUser, file1);
+            userRepository.save(oldUser);
+        }
+    }
+
+    @Override
     public User getUserByPrincipal(Principal principal) {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
@@ -85,6 +100,29 @@ public class UserServiceImpl implements UserService {
             user.setRating(user.getRating() + value);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public void addAvatar(User user, MultipartFile file1) throws IOException {
+        User user1 = userRepository.findById(user.getId()).orElse(null);
+        Image image1;
+        if (file1.getSize() != 0) {
+            image1 = toImageEntity(file1);
+            if (user1 != null) {
+                user1.setAvatar(image1);
+                userRepository.save(user1);
+            }
+        }
+    }
+
+    private Image toImageEntity(MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setName(file.getName());
+        image.setOriginalFileName(file.getOriginalFilename());
+        image.setContentType(file.getContentType());
+        image.setSize(file.getSize());
+        image.setBytes(file.getBytes());
+        return image;
     }
 
     public List<User> findAllSortedByRating() {

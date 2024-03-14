@@ -8,10 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 import ru.vsu.csf.classifiedsweb.util.pairs.UserPlace;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,5 +78,17 @@ public class UserController {
         model.addAttribute("usersPlaces", usersPlaces);
         model.addAttribute("user", user);
         return "user-rating";
+    }
+
+    @GetMapping("/users/{id}/edit")
+    public String userEdit(@PathVariable(value = "id") long userID, Principal principal, Model model) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "user-edit";
+    }
+
+    @PostMapping("/users/{id}/edit")
+    public String editUser(@PathVariable(value = "id") long userID, @RequestParam("file1") MultipartFile file1, User user, Model model) throws IOException {
+        userService.update(userID, user, file1);
+        return "redirect:/profile";
     }
 }
