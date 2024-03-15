@@ -21,22 +21,26 @@
       <img th:src="'/images/' + ${el.previewImageId}" height="100px"/><br>
     </div>
     <div th:if="${user}==${el.user} and ${el.state != T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}" class="my-2">
-      <br><a th:href="'/advertisements/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a>
+      <br><a th:href="'/advertisements/' + ${el.id} + '/edit'" class="btn btn-link"><img src="edit.png" alt="" width="50" height="50"></a>
       <form th:action="'/advertisements/' + ${el.id} + '/remove'" method="post" style="display: inline-block;">
-        <button type="submit" class="btn btn-warning">Удалить</button>
+        <button type="submit" class="btn btn-link"><img src="delete.png" alt="" width="50" height="50"></button>
       </form>
-      <br>
       <a th:href="'/advertisements/' + ${el.id} + '/complete'" class="btn btn-warning my-2">Завершить</a>
+      <br>
     </div>
     <div th:if="${user.email}!=null and ${el.state != T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}">
       <div th:unless="${#sets.contains(responses, el.id)}">
         <form th:action="'/react/' + ${el.id}" method="post" style="display: inline-block;">
-          <button type="submit" class="btn btn-warning">Откликнуться</button>
+          <button type="submit" class="btn btn-link">
+            <img src="like.png" alt="" width="50" height="50">
+          </button>
         </form>
       </div>
       <div th:if="${#sets.contains(responses, el.id)}">
         <form th:action="'/react/' + ${el.id}" method="post" style="display: inline-block;">
-          <button type="submit" class="btn btn-warning">Отменить отклик</button>
+          <button type="submit" class="btn btn-link">
+            <img src="dislike.png" alt="" width="50" height="50">
+          </button>
         </form>
       </div>
     </div>

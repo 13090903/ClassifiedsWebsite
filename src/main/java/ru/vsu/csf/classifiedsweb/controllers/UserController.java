@@ -12,13 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.User;
+import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
+import ru.vsu.csf.classifiedsweb.services.ReactionService;
 import ru.vsu.csf.classifiedsweb.services.UserService;
 import ru.vsu.csf.classifiedsweb.util.pairs.UserPlace;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +30,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     private final UserService userService;
+    @Autowired
+    private final ReactionService reactionService;
+    @Autowired
+    private final AdvertisementService advertisementService;
 
     @GetMapping("/login")
     public String login() {
@@ -48,6 +56,12 @@ public class UserController {
     @GetMapping("/user/{user}")
     public String userInfo(@PathVariable("user") User user,Principal principal, Model model) {
         User userCurr = userService.getUserByPrincipal(principal);
+        Set<Long> responses = new HashSet<>();
+        List<Advertisement> advertisementList = reactionService.findAdvertisementsByUserId(advertisementService.getUserByPrincipal(principal).getId());
+        for (Advertisement ad : advertisementList) {
+            responses.add(ad.getId());
+        }
+        model.addAttribute("responses", responses);
         model.addAttribute("userC", userCurr);
         model.addAttribute("user", user);
         model.addAttribute("advertisements", user.getAdvertisements());
