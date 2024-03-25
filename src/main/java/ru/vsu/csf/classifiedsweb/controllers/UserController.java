@@ -3,13 +3,16 @@ package ru.vsu.csf.classifiedsweb.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
@@ -48,8 +51,10 @@ public class UserController {
 
     @PostMapping("/registration")
     public String createUser(User user) {
+        if (!userService.createUser(user)) {
+            return "redirect:/registration";
+        }
         log.info("Register user {}", user);
-        userService.createUser(user);
         return "redirect:/login";
     }
 
