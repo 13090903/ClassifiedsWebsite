@@ -14,12 +14,22 @@
     <h1 class="display-5 fw-bold text-body-emphasis">Объявления</h1>
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-4"></p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="/advertisements/add" class="btn btn-primary btn-lg px-4 gap-3">1</a>
-            <a href="/advertisements/add" class="btn btn-primary btn-lg px-4 gap-3">2</a>
-            <a th:if="${user.isAdmin()}==true" href="/admin" class="btn btn-primary">Панель администратора</a>
-            <a href="/profile" class="btn btn-primary">Профиль</a>
-            <a href="/users/rating" class="btn btn-primary">Рейтинг</a>
+        <div style="text-align: center">
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/advertisements/add">
+                Добавить Объявление
+            </a>
+            <a th:if="${user.isAdmin()}" href="/admin" class="btn btn-dark mb-3" style="text-align: center; width: 100%">
+                Панель администратора <br>
+            </a>
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" th:href="'/user/' + ${user.id}">
+                Мои Объявления
+            </a>
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/profile">
+                Профиль
+            </a>
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/users/rating">
+                Рейтинг
+            </a>
         </div>
     </div>
 </div>

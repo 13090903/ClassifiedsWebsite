@@ -21,12 +21,15 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class ReactionServiceImpl implements ReactionService {
-    @Autowired
     private final ReactionRepository reactionRepository;
-    @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
+    public ReactionServiceImpl(ReactionRepository reactionRepository, UserRepository userRepository) {
+        this.reactionRepository = reactionRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Reaction findById(Long id) {

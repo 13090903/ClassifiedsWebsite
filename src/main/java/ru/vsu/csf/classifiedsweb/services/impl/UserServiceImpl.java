@@ -19,12 +19,15 @@ import java.util.Set;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public boolean createUser(User user) {
         String userEmail = user.getEmail();
