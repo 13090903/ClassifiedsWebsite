@@ -9,18 +9,56 @@
 <body>
 <header th:insert="~{blocks/header :: header}"></header>
 
-<div class="h-100 d-flex align-items-center justify-content-center">
-  <h3>Регистрация</h3>
-</div>
-
-<form action="/registration" method="post">
-  <input type="text" name="name" placeholder="Имя пользователя" class="form-control"><br>
-  <input type="email" name="email" placeholder="Электронная почта" class="form-control"><br>
-  <input type="text" name="phoneNumber" placeholder="Номер телефона" class="form-control"><br>
-  <input type="text" name="city" placeholder="Город" class="form-control"><br>
-  <input type="password" name="password" placeholder="Пароль" class="form-control"><br>
-  <button type="submit" class="btn btn-success">Зарегистрироваться</button>
 </form>
+
+<section class="vh-80">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem; border-color: black;">
+          <div class="card-body p-5 text-center">
+
+            <h3 class="mb-5">Регистрация</h3>
+
+            <form action="/registration" method="post">
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="text" name="name" placeholder="Имя пользователя"
+                       class="form-control form-control-lg"/>
+              </div>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="email" name="email" placeholder="Электронная почта"
+                       class="form-control form-control-lg"/>
+              </div>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="text" name="phoneNumber" placeholder="Номер телефона"
+                       class="form-control form-control-lg"/>
+              </div>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="text" name="city" placeholder="Город"
+                       class="form-control form-control-lg"/>
+              </div>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input type="password" name="password" placeholder="Пароль"
+                       class="form-control form-control-lg"/>
+              </div>
+
+              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" style="width: 300px"
+                      type="submit">Зарегистрироваться
+              </button>
+            </form>
+
+            <hr class="my-4">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 </body>
 </html>
