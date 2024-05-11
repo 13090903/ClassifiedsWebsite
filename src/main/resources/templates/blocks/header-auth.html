@@ -8,8 +8,12 @@
     </div>
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="/" class="nav-link px-2 link-secondary">Главная</a></li>
-      <li><a href="/advertisements" class="nav-link px-2">Объявления</a></li>
+      <li><a href="/" class="nav-link px-2 link-secondary" style="font-size: 18px;">Главная</a></li>
+      <li><a href="/advertisements" class="nav-link px-2" style="font-size: 18px;">Объявления</a></li>
+
+      <li><a href="/profile" class="nav-link px-2" style="font-size: 18px;">Профиль</a></li>
+      <li><a href="/users/rating" class="nav-link px-2" style="font-size: 18px;">Рейтинг</a></li>
+      <li><a th:if="${user.isAdmin()}" href="/admin" class="nav-link px-2" style="font-size: 18px;">Панель администратора</a></li>
     </ul>
 
     <div class="col-md-3 text-end mx-2">
