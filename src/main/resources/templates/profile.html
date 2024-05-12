@@ -37,10 +37,13 @@ text-decoration: none;
                 <div class="card">
                     <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                         <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                            <img th:src="'/images/' + ${user.avatar.id}"
+                            <img th:if="${user.avatar}!=null" th:src="'/images/' + ${user.avatar.id}"
                                  alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                  style="width: 150px; z-index: 1">
-                            <a type="button"
+                            <img th:unless="${user.avatar}!=null" src="../../white.png"
+                                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                                 style="width: 150px; z-index: 1">
+                            <a th:if="${user.email}==${userC.email}" type="button"
                                class="btn btn-outline-dark text-body"
                                style="z-index: 1;"
                                th:href="'/users/' + ${user.id} + '/edit'">
@@ -65,7 +68,7 @@ text-decoration: none;
                         </div>
                     </div>
                     <div class="card-body p-4 text-black">
-                        <div class="mb-5  text-body">
+                        <div class="mb-5  text-body" th:if="${userC.isAdmin} or ${userC.email}==${user.email}">
                             <p class="lead fw-normal mb-1">Информация о себе</p>
                             <div class="p-4 bg-body-tertiary">
                                 <p class="font-italic mb-1" th:text="'Электоронная почта: ' + ${user.email}"></p>
@@ -73,7 +76,7 @@ text-decoration: none;
                             </div>
                         </div>
                     </div>
-                    <div class="mx-5">
+                    <div class="mx-5" th:if="${userC.isAdmin} and ${userC.email}==${user.email}">
                         <a th:if="${user.isAdmin()}" href="/admin" class="btn btn-dark mb-3 mx-6"
                            style="text-align: center; width: 100%">
                             Панель администратора

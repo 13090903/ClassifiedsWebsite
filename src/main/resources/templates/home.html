@@ -24,7 +24,7 @@
             <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" th:href="'/user/' + ${user.id}">
                 Мои Объявления
             </a>
-            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/profile">
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" th:href="'users/' + ${user.id} + '/profile'">
                 Профиль
             </a>
             <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/users/rating">

@@ -74,7 +74,7 @@
                             <small class="text-muted" th:text="'Город: ' + ${el.user.city}"></small>
                         </p>
                         <p class="card-text mx-2" th:text="${el.description}"></p>
-                        <a class="link-danger my-2 mx-2" th:href="'/user/' + ${el.user.id}" th:text="${el.user.name}">
+                        <a class="link-danger my-2 mx-2" th:href="'../users/' + ${el.user.id} + '/profile'" th:text="${el.user.name}">
                         </a>
                     </div>
                         <div th:if="${user.email}!=null and ${user.email != el.user.email}">
