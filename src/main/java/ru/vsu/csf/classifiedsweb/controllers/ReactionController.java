@@ -29,6 +29,6 @@ public class ReactionController {
             log.info("User {} remove reaction to advertisement {}", principal.getName(), advertisement.getTitle());
             reactionService.deleteById(reaction.getId());
         }
-        return "redirect:/advertisements";
+        return "redirect:/advertisements/{advertisement}";
     }
 }

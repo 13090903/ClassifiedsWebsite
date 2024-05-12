@@ -45,6 +45,13 @@ public class AdvertisementController {
 
     @GetMapping("/advertisements/{id}")
     public String advertisementDescription(@PathVariable(value = "id") long advertisementID, Principal principal, Model model) {
+        Iterable<Advertisement> advertisements = advertisementService.findAll();
+        Set<Long> responses = new HashSet<>();
+        List<Advertisement> advertisementList = reactionService.findAdvertisementsByUserId(advertisementService.getUserByPrincipal(principal).getId());
+        for (Advertisement ad : advertisementList) {
+            responses.add(ad.getId());
+        }
+        model.addAttribute("responses", responses);
         model.addAttribute("advertisement", advertisementService.findById(advertisementID));
         model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
 
