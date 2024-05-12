@@ -22,10 +22,7 @@ import ru.vsu.csf.classifiedsweb.util.pairs.UserPlace;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -61,15 +58,11 @@ public class UserController {
     @GetMapping("/user/{user}")
     public String userInfo(@PathVariable("user") User user,Principal principal, Model model) {
         User userCurr = userService.getUserByPrincipal(principal);
-        Set<Long> responses = new HashSet<>();
-        List<Advertisement> advertisementList = reactionService.findAdvertisementsByUserId(advertisementService.getUserByPrincipal(principal).getId());
-        for (Advertisement ad : advertisementList) {
-            responses.add(ad.getId());
-        }
-        model.addAttribute("responses", responses);
+        List<Advertisement> ads = user.getAdvertisements();
+        ads.sort(Comparator.comparing(Advertisement::getState));
         model.addAttribute("userC", userCurr);
         model.addAttribute("user", user);
-        model.addAttribute("advertisements", user.getAdvertisements());
+        model.addAttribute("advertisements", ads);
         return "user-information";
     }
 

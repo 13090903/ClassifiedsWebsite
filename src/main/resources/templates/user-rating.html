@@ -48,7 +48,7 @@
              style="background-color: #F9F9F9; width: 100%; justify-content: space-between;">
             <div class="d-flex flex-row">
                 <h3 th:text="${el.place} + '.     '" style="font-weight: lighter;"></h3>
-                <img th:if="${el.user.avatar}!=null" th:src="'/images/' + ${user.avatar.id}"
+                <img th:if="${el.user.avatar}!=null" th:src="'/images/' + ${el.user.avatar.id}"
                      alt=""
                      class="ms-3 me-2"
                      style="width: 32px;height: 32px;">
