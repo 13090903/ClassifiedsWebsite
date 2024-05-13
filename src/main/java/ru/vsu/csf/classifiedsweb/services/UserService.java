@@ -23,5 +23,8 @@ public interface UserService {
 
     void addRatingById(Long id, Long value);
 
+    int countAdvertisementsById(Long id);
+
+
     void addAvatar(User user, MultipartFile file1) throws IOException;
 }

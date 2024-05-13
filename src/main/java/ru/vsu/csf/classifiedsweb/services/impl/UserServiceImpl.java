@@ -106,6 +106,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int countAdvertisementsById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            return user.getAdvertisements().size();
+        }
+        return 0;
+    }
+
+    @Override
     public void addAvatar(User user, MultipartFile file1) throws IOException {
         User user1 = userRepository.findById(user.getId()).orElse(null);
         Image image1;

@@ -55,11 +55,11 @@ text-decoration: none;
                     <div class="p-4 text-black bg-body-tertiary">
                         <div class="d-flex justify-content-end text-center py-1 text-body">
                             <div>
-                                <p class="mb-1 h5" th:text="${user.rating}"></p>
+                                <p class="mb-1 h5" th:text="${user.rating}">0</p>
                                 <p class="small text-muted mb-0">Рейтинг</p>
                             </div>
                             <div class="px-3">
-                                <p class="mb-1 h5">6</p>
+                                <p class="mb-1 h5" th:text="${ads}"></p>
                                 <p class="small text-muted mb-0">Объявлений</p>
                             </div>
                         </div>

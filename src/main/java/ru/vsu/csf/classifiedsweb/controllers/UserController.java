@@ -69,16 +69,20 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
         User userC = userService.getUserByPrincipal(principal);
+        int ads = userService.countAdvertisementsById(userC.getId());
         model.addAttribute("userC", userC);
         model.addAttribute("user", userC);
+        model.addAttribute("ads", ads);
         return "profile";
     }
 
     @GetMapping("/users/{user}/profile")
     public String profile(Principal principal, @PathVariable("user") User user, Model model) {
         User userC = userService.getUserByPrincipal(principal);
+        int ads = userService.countAdvertisementsById(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("userC", userC);
+        model.addAttribute("ads", ads);
         return "profile";
     }
 
