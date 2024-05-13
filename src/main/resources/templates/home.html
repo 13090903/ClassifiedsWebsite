@@ -10,25 +10,31 @@
 <header th:if="${user.email}==null" th:insert="~{blocks/header :: header}"></header>
 <header th:unless="${user.email}==null" th:insert="~{blocks/header-auth :: header}"></header>
 
-<div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold text-body-emphasis">Объявления</h1>
-    <div class="col-lg-6 mx-auto">
+<div class="px-4 py-2 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis" style="color:blue;">HelpLink</h1>
+    <div class="col-lg-8 mx-auto">
         <p class="lead mb-4"></p>
         <div style="text-align: center">
-            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/advertisements/add">
+            <p class="lead">Наш веб-сайт объявлений для добровольной помощи - это вдохновляющее сообщество, где каждый может разместить объявление о помощи или помочь другим. Вот как мы делаем этот процесс удобным и эффективным:</p>
+            <p class="lead">1. Добро пожаловать в мир помощи:
+                здесь вы можете разместить свои объявления о помощи или найти тех, кто нуждается в вашей поддержке. Мы верим в силу общественной помощи!
+            </p>
+            <p class="lead">                2. Фотографии говорят больше слов:
+                добавляйте фотографии к вашим объявлениям, чтобы делиться визуальными историями о ваших актах доброты. Одна картинка может рассказать больше, чем тысяча слов!
+            </p>
+            <p class="lead">                3. Изменения на лету:
+                легко редактируйте и удаляйте свои объявления по мере необходимости. Мы хотим, чтобы ваш опыт взаимопомощи был безупречным и удобным.
+            </p>
+            <p class="lead">                4. Профили с историей доброты:
+                у каждого пользователя есть свой профиль, отражающий их добрые дела. Пользуйтесь системой рейтинга, чтобы выражать благодарность и уважение другим участникам сообщества.
+            </p>
+            <p class="lead">                5. Администраторы заботятся о качестве:
+                наши администраторы следят за контентом, чтобы обеспечить безопасное и дружелюбное окружение. Они готовы помочь и регулировать процессы ради лучшего опыта всех участников.
+            </p>
+            <p class="lead">            С нашим сайтом объявлений для добровольной помощи вы можете делиться добром, находить помощь и создавать позитивное сообщество, где каждый может внести свой вклад в сделку добра.
+            </p>
+            <a class="btn btn-outline-dark mb-3" style="text-align: center; width: 100%" href="/advertisements/add">
                 Добавить Объявление
-            </a>
-            <a th:if="${user.isAdmin()}" href="/admin" class="btn btn-dark mb-3" style="text-align: center; width: 100%">
-                Панель администратора <br>
-            </a>
-            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" th:href="'/user/' + ${user.id}">
-                Мои Объявления
-            </a>
-            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" th:href="'users/' + ${user.id} + '/profile'">
-                Профиль
-            </a>
-            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%" href="/users/rating">
-                Рейтинг
             </a>
         </div>
     </div>
