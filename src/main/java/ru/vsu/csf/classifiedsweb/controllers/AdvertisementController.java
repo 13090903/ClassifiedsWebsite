@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.vsu.csf.classifiedsweb.enums.AdvertisementState;
 import ru.vsu.csf.classifiedsweb.models.Advertisement;
 import ru.vsu.csf.classifiedsweb.models.User;
 import ru.vsu.csf.classifiedsweb.services.AdvertisementService;
@@ -15,9 +16,7 @@ import ru.vsu.csf.classifiedsweb.services.UserService;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,12 +31,24 @@ public class AdvertisementController {
     @GetMapping("/advertisements")
     public String advertisements(Principal principal, Model model) {
         Iterable<Advertisement> advertisements = advertisementService.findAll();
+        List<Advertisement> ads = new ArrayList<>();
+        for (Advertisement ad : advertisements) {
+            if (ad.getState() != AdvertisementState.COMPLETED) {
+                ads.add(ad);
+            }
+        }
+        ads.sort((o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()));
+        for (Advertisement ad : advertisements) {
+            if (ad.getState() == AdvertisementState.COMPLETED) {
+                ads.add(ad);
+            }
+        }
         Set<Long> responses = new HashSet<>();
         List<Advertisement> advertisementList = reactionService.findAdvertisementsByUserId(advertisementService.getUserByPrincipal(principal).getId());
         for (Advertisement ad : advertisementList) {
             responses.add(ad.getId());
         }
-        model.addAttribute("advertisements", advertisements);
+        model.addAttribute("advertisements", ads);
         model.addAttribute("responses", responses);
         model.addAttribute("user", advertisementService.getUserByPrincipal(principal));
         return "advertisements";
