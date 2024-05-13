@@ -16,6 +16,8 @@ import ru.vsu.csf.classifiedsweb.util.exceptions.AdvertisementNotFoundException;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +39,21 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public Iterable<Advertisement> findAll() {
         return advertisementRepository.findAllByOrderByStateAsc();
+    }
+
+    @Override
+    public List<Advertisement> findAllByCity(String city) {
+        if (city == null) {
+            return (List<Advertisement>) findAll();
+        }
+        Iterable<Advertisement> all = advertisementRepository.findAllByOrderByStateAsc();
+        List<Advertisement> searched = new ArrayList<>();
+        for (Advertisement ad : all) {
+            if (ad.getUser().getCity() != null && ad.getUser().getCity().equalsIgnoreCase(city) && ad.getState() != AdvertisementState.COMPLETED) {
+                searched.add(ad);
+            }
+        }
+        return searched;
     }
 
     @Override

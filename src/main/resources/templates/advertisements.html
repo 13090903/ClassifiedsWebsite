@@ -14,6 +14,12 @@
 <div class="d-flex justify-content-center">
     <div class="container mt-2" style="width:850px">
         <h1>Объявления</h1>
+        <form method="get" action="/advertisements">
+            <div class="d-flex flex-row mb-2">
+                <input type="text" name="city" placeholder="Введите город" class="form-control"><br>
+                <button type="submit" class="btn btn-primary btn-block ms-1">Сохранить</button>
+            </div>
+        </form>
         <div th:each="el : ${advertisements}">
             <div th:if="${el.state != T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}"
                  class="card mb-3" style="max-width: 850px;">
@@ -37,7 +43,8 @@
                         </div>
                         <div th:if="${user}==${el.user} and ${el.state != T(ru.vsu.csf.classifiedsweb.enums.AdvertisementState).COMPLETED}"
                              class="btn-group shadow-0 mx-2" style="width:95%" role="group">
-                            <a th:href="'/advertisements/' + ${el.id} + '/complete'" type="button" class="btn btn-outline-info">Завершить</a>
+                            <a th:href="'/advertisements/' + ${el.id} + '/complete'" type="button"
+                               class="btn btn-outline-info">Завершить</a>
                             <a th:href="'/advertisements/' + ${el.id} + '/edit'" type="button"
                                class="btn btn-outline-warning">Редактировать</a>
                             <form th:action="'/advertisements/' + ${el.id} + '/remove'" method="post">

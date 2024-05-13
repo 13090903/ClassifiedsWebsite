@@ -29,18 +29,31 @@ public class AdvertisementController {
     private UserService userService;
 
     @GetMapping("/advertisements")
-    public String advertisements(Principal principal, Model model) {
+    public String advertisements(@RequestParam(name = "city", required = false) String city, Principal principal, Model model) {
+        List<Advertisement> ads;
         Iterable<Advertisement> advertisements = advertisementService.findAll();
-        List<Advertisement> ads = new ArrayList<>();
-        for (Advertisement ad : advertisements) {
-            if (ad.getState() != AdvertisementState.COMPLETED) {
-                ads.add(ad);
+        if (city != null && !city.equals("")) {
+            ads = advertisementService.findAllByCity(city);
+        } else {
+            ads = new ArrayList<>();
+            for (Advertisement ad : advertisements) {
+                if (ad.getState() != AdvertisementState.COMPLETED) {
+                    ads.add(ad);
+                }
             }
         }
         ads.sort((o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()));
-        for (Advertisement ad : advertisements) {
-            if (ad.getState() == AdvertisementState.COMPLETED) {
-                ads.add(ad);
+        if (city != null && !city.equals("")) {
+            for (Advertisement ad : advertisements) {
+                if (ad.getState() == AdvertisementState.COMPLETED && ad.getUser().getCity().equalsIgnoreCase(city)) {
+                    ads.add(ad);
+                }
+            }
+        } else {
+            for (Advertisement ad : advertisements) {
+                if (ad.getState() == AdvertisementState.COMPLETED) {
+                    ads.add(ad);
+                }
             }
         }
         Set<Long> responses = new HashSet<>();
